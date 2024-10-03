@@ -1,53 +1,168 @@
-# Projeto Kotlin Básico
+# DidaCoin - Projeto de Criptomoeda Didática
 
-Este repositório contém um curso básico de Kotlin com exemplos práticos e projetos didáticos, incluindo tópicos de introdução à programação, funções, lambdas, coleções e orientação a objetos.
+## 1. Visão Geral do Projeto
+A DidaCoin é uma criptomoeda desenvolvida para fins educacionais, demonstrando os princípios fundamentais de blockchain e desenvolvimento de software usando Kotlin no backend e Vue.js no frontend.
 
-## Estrutura do Curso
+## 2. Objetivos
+- Criar uma criptomoeda funcional básica
+- Demonstrar boas práticas de desenvolvimento de software
+- Fornecer documentação clara e educativa
 
-1. **Introdução**
-   - Repositório
-   - Comparação: Java vs Kotlin
-   - Uso do Terminal e Configuração do Ambiente
+## 3. Stack Tecnológica
 
-2. **Conceitos Básicos**
-   - Primeiros passos com Kotlin
-   - Variáveis, Tipos e Operadores
-   - Controle de Fluxo (If, When, For, While)
+### 3.1 Backend (Kotlin)
+- Framework: Spring Boot
+- Build Tool: Gradle
+- Testes: JUnit 5 com Mockk
+- Documentação API: SpringDoc OpenAPI
 
-3. **Funções**
-   - Funções top-level, parâmetros, retornos múltiplos
-   - Funções inline, infix e funções como parâmetros
+### 3.2 Frontend (Vue.js)
+- Vue.js 3 com Composition API
+- TypeScript para type safety
+- Pinia para gerenciamento de estado
+- Vue Router para navegação
+- Vite como build tool
 
-4. **Classes e Objetos**
-   - Classes, construtores, membros e data classes
-   - Encapsulamento, herança e polimorfismo
+### 3.3 Infraestrutura
+- Docker para containerização
+- PostgreSQL para persistência
+- Redis para caching
 
-5. **Lambdas e Coleções**
-   - Uso de lambdas em coleções (filter, map, sortedBy)
-   - Arrays, ArrayLists, Sets e Maps
+## 4. Estrutura do Projeto
 
-## Requisitos
+### 4.1 Backend (Kotlin)
+```
+src/
+├── main/
+│   ├── kotlin/
+│   │   └── com/
+│   │       └── didacoin/
+│   │           ├── Application.kt
+│   │           ├── blockchain/
+│   │           │   ├── Block.kt
+│   │           │   ├── Blockchain.kt
+│   │           │   └── Transaction.kt
+│   │           ├── wallet/
+│   │           │   └── Wallet.kt
+│   │           ├── api/
+│   │           │   └── controllers/
+│   │           └── config/
+│   └── resources/
+│       └── application.yml
+└── test/
+    └── kotlin/
+        └── com/
+            └── didacoin/
+```
 
-- **Java JDK**: Versão 11 ou superior
-- **IntelliJ IDEA**: IDE recomendada para desenvolvimento Kotlin
+### 4.2 Frontend (Vue.js)
+```
+src/
+├── assets/
+├── components/
+│   ├── wallet/
+│   └── blockchain/
+├── views/
+├── router/
+├── stores/
+├── types/
+└── App.vue
+```
 
-## Como Usar
+## 5. Práticas de Desenvolvimento
 
-1. Clone este repositório:
-   ```bash
-   git clone https://github.com/neilsonlima/curso_kotlin.git
-   ```
+### 5.1 Kotlin Best Practices
+- Uso de data classes para models
+- Coroutines para operações assíncronas
+- Extension functions para código limpo
+- Null safety com tipos nullable
 
-2. Abra o projeto no IntelliJ IDEA e execute os exemplos.
+### 5.2 Vue.js Best Practices
+- Composables para lógica reutilizável
+- Single File Components
+- TypeScript para type safety
+- Convenções de nomenclatura Vue
 
-3. Siga os tópicos no curso para aprimorar seus conhecimentos em Kotlin.
+## 6. Implementação - Principais Componentes
 
----
+### 6.1 Blockchain Core (Kotlin)
+```kotlin
+data class Block(
+    val index: Long,
+    val timestamp: Long,
+    val transactions: List<Transaction>,
+    val previousHash: String,
+    val hash: String,
+    val nonce: Long
+)
 
-## Contribuições
+data class Transaction(
+    val id: String,
+    val sender: String,
+    val recipient: String,
+    val amount: BigDecimal,
+    val timestamp: Long
+)
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir um pull request ou relatar problemas.
+class Blockchain {
+    private val blocks: MutableList<Block> = mutableListOf()
+    
+    fun addBlock(transactions: List<Transaction>): Block {
+        // Implementação
+    }
+    
+    fun isValid(): Boolean {
+        // Implementação
+    }
+}
+```
 
-## Licença
+### 6.2 API Endpoints
+```kotlin
+@RestController
+@RequestMapping("/api/v1")
+class BlockchainController(private val blockchainService: BlockchainService) {
+    
+    @GetMapping("/blocks")
+    fun getBlocks(): List<Block> {
+        return blockchainService.getBlocks()
+    }
+    
+    @PostMapping("/transactions")
+    fun createTransaction(@RequestBody transaction: Transaction): Transaction {
+        return blockchainService.addTransaction(transaction)
+    }
+}
+```
 
-Este projeto está licenciado sob a [MIT License](LICENSE).
+## 7. Roadmap de Implementação
+
+### Sprint 1: Setup (1 semana)
+- Configurar projeto Kotlin com Spring Boot
+- Configurar projeto Vue.js
+- Definir estrutura de dados básica
+
+### Sprint 2: Core Blockchain (2 semanas)
+- Implementar estruturas de Block e Transaction
+- Desenvolver lógica de mineração básica
+- Criar testes unitários
+
+### Sprint 3: API e Integração (2 semanas)
+- Desenvolver endpoints REST
+- Implementar integração com banco de dados
+- Criar documentação da API
+
+### Sprint 4: Frontend Básico (2 semanas)
+- Desenvolver interface de usuário para visualização da blockchain
+- Implementar formulário de criação de transação
+- Integrar com API backend
+
+## 8. Próximos Passos Imediatos
+1. Setup do ambiente de desenvolvimento
+   - Instalar JDK, Kotlin, Node.js
+   - Configurar IDE (IntelliJ IDEA recomendado)
+2. Criar repositório Git
+3. Iniciar projeto Kotlin com Spring Boot
+4. Iniciar projeto Vue.js
+5. Desenvolver primeiro endpoint e componente
+
